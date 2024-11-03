@@ -168,3 +168,6 @@ win/
 
 # Data
 data/capture/imgs*
+data/raw
+
+sandbox/

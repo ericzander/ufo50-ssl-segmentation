@@ -80,4 +80,4 @@ def capture_window(window_title=None, file_type="jpeg", img_quality=80, cooldown
 
 
 if __name__ == "__main__":
-    capture_window("UFO 50", file_type="jpeg", quality=80, cooldown_secs=0.5)
+    capture_window("UFO 50", file_type="jpeg", img_quality=80, cooldown_secs=0.5)

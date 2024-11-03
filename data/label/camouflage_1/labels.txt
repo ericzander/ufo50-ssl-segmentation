@@ -1,0 +1,16 @@
+__ignore__
+_background_
+Grass
+Sand
+Marsh
+Stone
+Orange
+Exit
+Baby
+Enemy
+Player
+Log
+RainStone
+SunStone
+Button
+Stairs
