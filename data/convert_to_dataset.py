@@ -59,8 +59,12 @@ def main(game_dir: str):
 
     json_files = glob.glob(os.path.join("label/", game_dir, "img*.json"))
 
-    for json_file_path in json_files:
+    print("Starting conversion")
+
+    for i, json_file_path in enumerate(json_files):
         json_file_path: str = json_file_path.replace(os.sep, "/")
+
+        print(f"{i + 1}: {json_file_path}")
 
         # Load the Labelme annotation
         data = labelme.LabelFile(filename=json_file_path)
