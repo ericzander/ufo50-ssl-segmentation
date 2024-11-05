@@ -1,0 +1,18 @@
+{
+    "__ignore__": -1,
+    "_background_": 0,
+    "Grass": 1,
+    "Sand": 2,
+    "Marsh": 3,
+    "Stone": 4,
+    "Orange": 5,
+    "Exit": 6,
+    "Baby": 7,
+    "Enemy": 8,
+    "Player": 9,
+    "Log": 10,
+    "RainStone": 11,
+    "SunStone": 12,
+    "Button": 13,
+    "Stairs": 14
+}
