@@ -169,5 +169,6 @@ win/
 # Data
 data/capture/imgs*
 data/raw/*/
+data/datasets/*/
 
 sandbox/

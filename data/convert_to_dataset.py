@@ -1,6 +1,7 @@
 """Synthesizes dataset from labels and images. Requires labelme."""
 
 import os
+import shutil
 import json
 import glob
 import base64
@@ -51,11 +52,18 @@ def main(game_dir: str):
     with open(f"label/{game_dir}mapping.json", "r") as f:
         label_to_value = json.load(f)
 
-    # Paths
-    out_img_dir = f"datasets/{game_dir}img/"
+    # Save unlabeled image paths
+    raw_img_dir = f"raw/{game_dir}/"
+
+    # Output paths
+    out_labeled_dir = f"datasets/{game_dir}labeled/"
+    out_unlabeled_dir = f"datasets/{game_dir}unlabeled/"
     out_label_dir = f"datasets/{game_dir}labels/"
-    os.makedirs(out_img_dir, exist_ok=True)
+    os.makedirs(out_labeled_dir, exist_ok=True)
+    os.makedirs(out_unlabeled_dir, exist_ok=True)
     os.makedirs(out_label_dir, exist_ok=True)
+
+    labeled_images = set()
 
     json_files = glob.glob(os.path.join("label/", game_dir, "img*.json"))
 
@@ -82,13 +90,21 @@ def main(game_dir: str):
         
         # Save the original image
         image_filename = os.path.splitext(os.path.basename(json_file_path))[0] + ".png"
-        image_output_path = os.path.join(out_img_dir, image_filename)
+        labeled_images.add(image_filename)
+        image_output_path = os.path.join(out_labeled_dir, image_filename)
         Image.fromarray(img).save(image_output_path)
         
         # Save the label mask
         label_filename = os.path.splitext(os.path.basename(json_file_path))[0] + "_label.png"
         label_output_path = os.path.join(out_label_dir, label_filename)
         Image.fromarray(lbl.astype(np.int32)).save(label_output_path)
+
+    # Copy all unlabeled images to the dataset 
+    for image_file in os.listdir(raw_img_dir):
+        if image_file not in labeled_images:
+            raw_image_path = os.path.join(raw_img_dir, image_file)
+            unlabeled_output_path = os.path.join(out_unlabeled_dir, image_file)
+            shutil.copy(raw_image_path, unlabeled_output_path)
 
 if __name__ == "__main__":
     main("camouflage_1/")
