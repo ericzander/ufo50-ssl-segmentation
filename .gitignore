@@ -172,3 +172,6 @@ data/raw/*/
 data/datasets/*/
 
 sandbox/
+
+notebook/*.pth
+notebook/*.pkl

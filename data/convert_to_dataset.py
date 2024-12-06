@@ -69,6 +69,9 @@ def main(game_dir: str):
         label_output_path = os.path.join(out_label_dir, label_filename)
         Image.fromarray(lbl.astype(np.int32)).save(label_output_path)
 
+    with open(os.path.join(out_label_dir, "mapping.json"), "w") as file:
+        json.dump(label_to_value, file, indent=4)
+
     # Copy all unlabeled images to the dataset
     print("Copying unlabeled images...")
     _copy_and_convert_to_png(
@@ -131,7 +134,7 @@ def _copy_and_convert_to_png(raw_img_dir, out_unlabeled_dir, labeled_images):
             tasks.append((raw_image_path, unlabeled_output_path))
 
     # Process in parallel using multiprocessing
-    process_count = max(multiprocessing.cpu_count(), 8)
+    process_count = min(multiprocessing.cpu_count(), 8)
     with multiprocessing.Pool(processes=process_count) as pool:
         pool.map(_convert_and_copy, tasks)
 
